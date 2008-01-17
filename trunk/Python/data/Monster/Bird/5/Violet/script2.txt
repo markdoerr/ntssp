@@ -1,0 +1,5 @@
+mkdir bob
+for i in *.bmp
+do
+	convert $i -interpolate bicubic -resize 30% bob/$i
+done
