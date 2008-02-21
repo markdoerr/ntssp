@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 class Script(object):
     def __init__(self,sprites,sons):
         self.sprites=sprites

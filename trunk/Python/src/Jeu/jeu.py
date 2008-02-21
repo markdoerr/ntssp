@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import pygame, sys,os
 from Affichage.background import *
 from Affichage.sprite import *

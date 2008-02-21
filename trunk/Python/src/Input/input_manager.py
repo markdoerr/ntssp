@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import pygame
 import pygame.event
 import sys

@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import sys
 from Application.App import *
 

@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 """Resource Caching Module
 
 Most game projects require graphics, sound and other resources to be loaded

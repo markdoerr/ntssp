@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from xml.sax import ContentHandler, make_parser
 from Affichage.background import *
 from Affichage.sprite import *
