@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import pygame, sys,os
 from Affichage.effect import *
 from Affichage.resourcecache import *

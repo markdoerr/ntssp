@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from Affichage.display import *
 from Jeu.jeu import *
 def input(events): 

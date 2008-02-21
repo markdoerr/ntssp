@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 import pygame,pygame.rect
 from Affichage.effect import *
 from Constantes.DisplayConstantes import *

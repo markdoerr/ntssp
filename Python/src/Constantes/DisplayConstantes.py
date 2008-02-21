@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 HEIGHT=480
 WIDTH=640
 DEPTH_WINDOWED=8
