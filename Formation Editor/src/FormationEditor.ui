@@ -13,15 +13,23 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>21</y>
+     <width>806</width>
+     <height>658</height>
+    </rect>
+   </property>
    <layout class="QHBoxLayout" >
     <item>
-     <widget class="QGroupBox" name="groupBox_3" >
+     <widget class="QGroupBox" name="Preview" >
       <property name="title" >
-       <string>GroupBox</string>
+       <string>Preview</string>
       </property>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
-        <widget class="QScrollArea" name="qscrollarea" >
+        <widget class="QScrollArea" name="PreviewArea" >
          <property name="widgetResizable" >
           <bool>false</bool>
          </property>
@@ -49,34 +57,37 @@
       </property>
       <layout class="QVBoxLayout" >
        <item>
-        <widget class="QGroupBox" name="groupBox_2" >
+        <widget class="QGroupBox" name="PathGroup" >
          <property name="title" >
           <string>Path</string>
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QRadioButton" name="radioButton" >
+           <widget class="QRadioButton" name="Curve" >
             <property name="text" >
              <string>Curve</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2" >
+           <widget class="QRadioButton" name="Line" >
             <property name="text" >
              <string>Line</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2" >
+           <widget class="QPushButton" name="AddPath" >
             <property name="text" >
              <string>Add Path</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3" >
+           <widget class="QPushButton" name="DeletePath" >
             <property name="text" >
              <string>Delete Path</string>
             </property>
@@ -86,27 +97,30 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_4" >
+        <widget class="QGroupBox" name="AssociateGroup" >
          <property name="title" >
           <string>Associate</string>
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QRadioButton" name="radioButton_4" >
+           <widget class="QRadioButton" name="WhenEnd" >
             <property name="text" >
              <string>When end</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_3" >
+           <widget class="QRadioButton" name="WhenPlayerIsFound" >
             <property name="text" >
              <string>When Player is found</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_4" >
+           <widget class="QPushButton" name="AssociateButton" >
             <property name="text" >
              <string>Associate</string>
             </property>
@@ -116,13 +130,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox" >
+        <widget class="QGroupBox" name="PenwidthGroup" >
          <property name="title" >
           <string>Pen Width</string>
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QSlider" name="horizontalSlider" >
+           <widget class="QSlider" name="PenWidthSlider" >
             <property name="orientation" >
              <enum>Qt::Horizontal</enum>
             </property>
@@ -132,16 +146,16 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="monster" >
+        <widget class="QGroupBox" name="MonsterGroup" >
          <property name="title" >
           <string>Monster</string>
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QWidget" native="1" name="widget_2" >
+           <widget class="QWidget" native="1" name="PreviewWidget" >
             <layout class="QHBoxLayout" >
              <item>
-              <widget class="QLabel" name="label_2" >
+              <widget class="QLabel" name="PreviewLabel" >
                <property name="text" >
                 <string>Preview</string>
                </property>
@@ -154,17 +168,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" native="1" name="widget" >
+           <widget class="QWidget" native="1" name="SizeWidget" >
             <layout class="QHBoxLayout" >
              <item>
-              <widget class="QLabel" name="label" >
+              <widget class="QLabel" name="SizeLabel" >
                <property name="text" >
                 <string>Size</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="horizontalSlider_2" >
+              <widget class="QSlider" name="SizeSlider" >
                <property name="minimum" >
                 <number>1</number>
                </property>
@@ -186,17 +200,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" native="1" name="widget_4" >
+           <widget class="QWidget" native="1" name="ColorWidget" >
             <layout class="QHBoxLayout" >
              <item>
-              <widget class="QLabel" name="label_3" >
+              <widget class="QLabel" name="ColorLabel" >
                <property name="text" >
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="horizontalSlider_3" >
+              <widget class="QSlider" name="ColorSlider" >
                <property name="minimum" >
                 <number>1</number>
                </property>
@@ -218,7 +232,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton" >
+           <widget class="QPushButton" name="AddChange" >
             <property name="text" >
              <string>Add/Change</string>
             </property>
@@ -228,20 +242,20 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_5" >
+        <widget class="QGroupBox" name="GlobalGroup" >
          <property name="title" >
           <string>Global</string>
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QPushButton" name="pushButton_5" >
+           <widget class="QPushButton" name="Animate" >
             <property name="text" >
              <string>Animate</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_6" >
+           <widget class="QPushButton" name="Save" >
             <property name="text" >
              <string>Save</string>
             </property>
@@ -261,20 +275,21 @@
      <x>0</x>
      <y>0</y>
      <width>806</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>679</y>
+     <width>806</width>
      <height>19</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QScrollArea</class>
-   <extends>QFrame</extends>
-   <header>QScrollArea</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
