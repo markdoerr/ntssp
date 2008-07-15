@@ -3,6 +3,7 @@ package com.python.pydev.license;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import org.python.pydev.core.structure.FastStringBuffer;
+import java.util.Calendar;
 
 public class ClientEncryption
 {
@@ -50,9 +51,11 @@ public class ClientEncryption
 
   public String decrypt(String data)
   {
-	String s = "email = syphius@hotmail.com\n"+
+	Calendar c = Calendar.getInstance();
+	c.set(2050,7,1);
+	String s = "e-mail = syphius@hotmail.com\n"+
 		     "name = Syhius\n"+
-		     "time = "+ Long.MAX_VALUE +"\n"+
+		     "time = "+ c.getTimeInMillis() +"\n"+
 		     "licenseType = Multi Developer\n"+
 		     "devs = 200";
       return s;
