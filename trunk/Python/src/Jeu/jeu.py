@@ -10,8 +10,8 @@ import Jeu.monster
 import pygame.sprite
 class Jeu:
     def __init__(self,display):
-        p = getPersoFromXML('F:\Twinkle Star Sprites\Python\data\Persos\LoadRan\LoadRan.xml',display.backbuffer)
-        p1 = getPersoFromXML('F:\Twinkle Star Sprites\Python\data\Persos\LoadRan\LoadRan.xml',display.backbuffer)
+        p = getPersoFromXML('..\data\Persos\LoadRan\LoadRan.xml',display.backbuffer)
+        p1 = getPersoFromXML('..\data\Persos\LoadRan\LoadRan.xml',display.backbuffer)
         p.setNumPlayer(1,2)
         p.setCoord(50,50)
         p1.setNumPlayer(2,2)
@@ -19,7 +19,7 @@ class Jeu:
         self.joueurs=[JoueurClavier(p),JoueurClavier(p1)]
         self.persos=[p,p1]
         Application.App.App.getSingleton().jeu=self
-        self.stage = getStageFromXML('F:\Twinkle Star Sprites\Python\data\Stages\Stage 1\Stage1.xml',display.backbuffer)
+        self.stage = getStageFromXML('..\data\Stages\Stage 1\Stage1.xml',display.backbuffer)
     def update(self):
         scan()
         self.stage.update()

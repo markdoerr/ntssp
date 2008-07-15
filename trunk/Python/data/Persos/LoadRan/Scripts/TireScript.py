@@ -32,7 +32,7 @@ def collide(sprites):
             scripts.remove(c)
             tire_collide.remove(c.sprites[0])
 def newScript(app,perso):
-    script = getScriptFromXML("F:\Twinkle Star Sprites\Python\data\Persos\LoadRan\Scripts\TireScript.xml",app.display.backbuffer)
+    script = getScriptFromXML("..\data\Persos\LoadRan\Scripts\TireScript.xml",app.display.backbuffer)
     ts = TireScript(script,perso)
     scripts.append(ts)
     
@@ -46,5 +46,5 @@ def update():
         tire_collide.remove(f.sprites[0])
         
 def load(app,perso):
-    getScriptFromXML("F:\Twinkle Star Sprites\Python\data\Persos\LoadRan\Scripts\TireScript.xml",app.display.backbuffer)
+    getScriptFromXML("..\data\Persos\LoadRan\Scripts\TireScript.xml",app.display.backbuffer)
         

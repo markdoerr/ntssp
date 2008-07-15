@@ -31,7 +31,7 @@ class BombScript(Script):
     @classmethod
     def getSingleton(cls,app,perso):
        if(cls.script is None):
-           sc = getScriptFromXML("F:\Twinkle Star Sprites\Python\data\Persos\LoadRan\Scripts\BombScript.xml",app.display.backbuffer)
+           sc = getScriptFromXML("..\data\Persos\LoadRan\Scripts\BombScript.xml",app.display.backbuffer)
            bs = BombScript(sc,perso,app)
            cls.script=bs
        return cls.script
