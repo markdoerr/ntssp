@@ -28,7 +28,7 @@ def update():
     return finished
 def load(app):
     global form
-    f = getFormationFromXML("F:\\Twinkle Star Sprites\\Python\\data\\Formation\\f1.xml",app.jeu.stage)
+    f = getFormationFromXML("..\\data\\Formation\\f1.xml",app.jeu.stage)
     for p in app.jeu.persos:
         form[(p)]=f.clone()
         
