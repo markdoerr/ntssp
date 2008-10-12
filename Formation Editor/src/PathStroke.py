@@ -432,6 +432,7 @@ class PathStrokeWidget(QWidget):
         QObject.connect(dashDotLine, SIGNAL("clicked()"),self.m_renderer.setDashDotLine);
         QObject.connect(dashDotDotLine, SIGNAL("clicked()"),self.m_renderer.setDashDotDotLine);
         QObject.connect(customDashLine, SIGNAL("clicked()"),self.m_renderer.setCustomDashLine);
+        
     
         # Set the defaults
         animated.setChecked(True);

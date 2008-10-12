@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
-    <height>698</height>
+    <width>819</width>
+    <height>814</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -17,8 +17,8 @@
     <rect>
      <x>0</x>
      <y>21</y>
-     <width>806</width>
-     <height>658</height>
+     <width>819</width>
+     <height>774</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" >
@@ -148,93 +148,30 @@
        <item>
         <widget class="QGroupBox" name="MonsterGroup" >
          <property name="title" >
-          <string>Monster</string>
+          <string>Groups</string>
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QWidget" native="1" name="PreviewWidget" >
-            <layout class="QHBoxLayout" >
-             <item>
-              <widget class="QLabel" name="PreviewLabel" >
-               <property name="text" >
-                <string>Preview</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" native="1" name="widget_3" />
-             </item>
-            </layout>
+           <widget class="QListWidget" name="listWidget" />
+          </item>
+          <item>
+           <widget class="QPushButton" name="AddFormation" >
+            <property name="text" >
+             <string>Add</string>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" native="1" name="SizeWidget" >
-            <layout class="QHBoxLayout" >
-             <item>
-              <widget class="QLabel" name="SizeLabel" >
-               <property name="text" >
-                <string>Size</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSlider" name="SizeSlider" >
-               <property name="minimum" >
-                <number>1</number>
-               </property>
-               <property name="maximum" >
-                <number>5</number>
-               </property>
-               <property name="pageStep" >
-                <number>1</number>
-               </property>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="tickPosition" >
-                <enum>QSlider::TicksAbove</enum>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" native="1" name="ColorWidget" >
-            <layout class="QHBoxLayout" >
-             <item>
-              <widget class="QLabel" name="ColorLabel" >
-               <property name="text" >
-                <string>Color</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSlider" name="ColorSlider" >
-               <property name="minimum" >
-                <number>1</number>
-               </property>
-               <property name="maximum" >
-                <number>5</number>
-               </property>
-               <property name="pageStep" >
-                <number>1</number>
-               </property>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="tickPosition" >
-                <enum>QSlider::TicksAbove</enum>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <widget class="QPushButton" name="DeleteFormation" >
+            <property name="text" >
+             <string>Delete</string>
+            </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="AddChange" >
             <property name="text" >
-             <string>Add/Change</string>
+             <string>Add/Change Monsters</string>
             </property>
            </widget>
           </item>
@@ -274,7 +211,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>806</width>
+     <width>819</width>
      <height>21</height>
     </rect>
    </property>
@@ -283,8 +220,8 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>679</y>
-     <width>806</width>
+     <y>795</y>
+     <width>819</width>
      <height>19</height>
     </rect>
    </property>
