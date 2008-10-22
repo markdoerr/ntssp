@@ -15,7 +15,7 @@ class Enemy:
         self.enemyPaths = enemyPaths;
         
     def toString(self):
-        return "Monster : " + str(self.life) +", "+str(self.size);
+        return "Enemy : " + str(self.life) +", "+str(self.size);
         
 class Formation:
     def __init__(self):
