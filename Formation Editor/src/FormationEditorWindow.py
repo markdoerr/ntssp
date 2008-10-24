@@ -67,12 +67,21 @@ class MonsterDialogWindow(QtGui.QDialog):
         currentFormation = Data.getInstance().getCurrentFormation();
         if(currentFormation is not None):
             self.ui.listWidget.clear();
+            ind=1;
             for enemy in currentFormation.enemies:
-                self.ui.listWidget.addItem(enemy.toString());
+                self.ui.listWidget.addItem(str(ind)+"- "+enemy.toString());
+                ind = ind + 1;
     def changeMonster(self):
-        pass;
+        indexSelected = self.ui.listWidget.selectedIndexes()
+        if(indexSelected is not None and len(indexSelected)>0):
+            Data.getInstance().getCurrentFormation().enemies[indexSelected[0].row()] = Enemy(self.ui.horizontalSlider.value(),self.ui.horizontalSlider_2.value(),(0,0),None);
+            self.updateMonsterList();
     def removeMonster(self):
-        pass;
+        indexSelected = self.ui.listWidget.selectedIndexes()
+        if(indexSelected is not None and len(indexSelected)>0):
+            Data.getInstance().getCurrentFormation().enemies.pop(indexSelected[0].row());
+            self.updateMonsterList()
+        
     def addMonster(self):
         currentFormation = Data.getInstance().getCurrentFormation();
         currentFormation.enemies.append(Enemy(self.ui.horizontalSlider.value(),self.ui.horizontalSlider_2.value(),(0,0),None));
