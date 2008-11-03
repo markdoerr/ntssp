@@ -1,5 +1,6 @@
 ﻿from PyQt4.QtGui import *
 from PyQt4.QtCore import *
+from Data.Data import *
 CurveMode = 0
 LineMode = 1
 class PathStrokeRenderer(QWidget):
@@ -7,11 +8,8 @@ class PathStrokeRenderer(QWidget):
         QWidget.__init__(self,parent)
         self.m_curve=True;
         self.m_colors=[Qt.red,Qt.blue,Qt.black,Qt.magenta,Qt.green,Qt.yellow,Qt.cyan];
-        self.m_paths=[];
-        self.m_vectorsPath=[];
-        self.m_CurrentPoints=[];
-        self.m_CurrentVectors=[];
-        self.m_Style=[];
+        self.currentPath = None;
+        self.currentPoint = None;
         self.m_pointSize = 5;
         self.m_activePoint = -1;
         self.m_capStyle = Qt.FlatCap;
@@ -42,181 +40,74 @@ class PathStrokeRenderer(QWidget):
     
     def paint(self,painter):
 
-        if (len(self.m_CurrentPoints)==0):
-            return;
-    
-        for j in range(len(self.m_paths)):
-            
-            CurrentPoints = self.m_paths[j];
-            painter.setRenderHint(QPainter.Antialiasing);
+        nbPaths = Data.getInstance().getNbEnemyPath();
         
-            painter.setPen(Qt.NoPen);
-        
-            # Construct the path
+        for i in xrange(nbPaths):
+            ePath = Data.getInstance().getEnemyPath(i).BezierSpline;
             path = QPainterPath();
-            path.moveTo(CurrentPoints[0]);
-        
-            if (self.m_pathMode == LineMode):
-                for i in xrange(1,len(CurrentPoints)):
-                    path.lineTo(CurrentPoints[i]);
-            else:
-                i=1;
-                while (i + 2 < len(CurrentPoints)):
-                    path.cubicTo(CurrentPoints[i], CurrentPoints[i+1], CurrentPoints[i+2]);
-                    i += 3;
-                while (i < len(CurrentPoints)) :
-                    path.lineTo(CurrentPoints[i]);
-                    i+=1;
-        
-        
-            # Draw the path
-            lg = self.m_colors[j%len(self.m_colors)];
-            if(self.m_Style[j]):
-                # The "custom" pen
-                if (self.m_penStyle == Qt.NoPen):
-                    stroker = QPainterPathStroker();
-                    stroker.setWidth(self.m_penWidth);
-                    stroker.setJoinStyle(self.m_joinStyle);
-                    stroker.setCapStyle(self.m_capStyle);
-        
-                    dashes = [];
-                    space = 4.0;
-                    dashes.append(1 << space);
-                    dashes.append(3 << space)
-                    dashes.append(9 << space)
-                    dashes.append(27 << space)
-                    dashes.append(9 << space)
-                    dashes.append(3 << space);
-                    stroker.setDashPattern(dashes);
-                    stroke = stroker.createStroke(path);
-                    painter.fillPath(stroke, lg);
-        
-                else:
-                    pen = QPen(lg, self.m_penWidth, self.m_penStyle, self.m_capStyle, self.m_joinStyle);
-                    painter.strokePath(path, pen);
-        
-            # Draw the control points
-            painter.setPen(QColor(50, 100, 120, 200));
-            painter.setBrush(QColor(50, 100, 120, 120));
-            for i in xrange(0,len(CurrentPoints)):
-                pos = CurrentPoints[i];
-                painter.drawEllipse(QRectF(pos.x() - self.m_pointSize,pos.y() - self.m_pointSize,self.m_pointSize*2, self.m_pointSize*2));
-            if(not self.m_Style[j]):
-                painter.setPen(lg);
-            else:
-                painter.setPen(QPen(Qt.black, 0, Qt.SolidLine));
-            painter.setBrush(Qt.NoBrush);
-            painter.drawPolyline(QPolygonF(CurrentPoints));
+            count = ePath.getCurveCount();
+            if(count == 0):
+                continue;
+            path.moveTo(ePath.getCurve(0).points[0].x,ePath.getCurve(0).points[0].y);
+            lg = self.m_colors[i%len(self.m_colors)];
+            for j in xrange(count):
+                curve = ePath.getCurve(j);
+                path.cubicTo(curve.points[1].x,curve.points[1].y,curve.points[2].x,curve.points[2].y,curve.points[3].x,curve.points[3].y);
+                for k in xrange(1,4):
+                    #Control Points
+                    painter.setPen(QColor(50, 100, 120, 200));
+                    painter.setBrush(QColor(50, 100, 120, 120));
+                    painter.drawEllipse(QRectF(curve.points[k].x - self.m_pointSize,curve.points[k].y - self.m_pointSize,self.m_pointSize*2, self.m_pointSize*2));
+                    
+                    painter.setPen(lg);
+                    painter.setBrush(Qt.NoBrush);
+                                    
+                    #Control Line
+                    painter.setPen(QPen(Qt.black, 0, Qt.SolidLine));
+                    painter.drawLine(curve.points[k-1].x,curve.points[k-1].y,curve.points[k].x,curve.points[k].y);
+            
+            pen = QPen(lg, self.m_penWidth, self.m_penStyle, self.m_capStyle, self.m_joinStyle);
+            painter.strokePath(path, pen);
 
-    def initializePoints(self):
-        count = 1;
-        #self.m_CurrentPoints=[];
-        #self.m_CurrentVectors=[];
-    
-        m = QMatrix();
-        rot = 360 / count;
-        center = QPointF(self.width() / 2, self.height() / 2);
-        vm = QMatrix();
-        vm.shear(2, -1);
-        vm.scale(3, 3);
-    
-        for i in xrange(0,count):
-            self.m_CurrentVectors.append(QPointF(0.1,0.25) * (m * vm));
-            self.m_CurrentPoints.append(QPointF(0, 100) * m + center);
-            m.rotate(rot);
-    
-    def addPoint(self,pos):
-        point = QPointF(pos)
-        line = QLineF(self.m_CurrentPoints[-1],point)
-        self.m_CurrentPoints.append(line.pointAt(1.0/3.0));
-        self.m_CurrentPoints.append(line.pointAt(2.0/3.0));
-        self.m_CurrentPoints.append(point)
-        self.update();
-    def addPath(self):
-        count = 1;
-        Points=[];
-        Vectors=[];
-    
-        m = QMatrix();
-        rot = 360 / count;
-        center = QPointF(self.width() / 2, self.height() / 2);
-        vm = QMatrix();
-        vm.shear(2, -1);
-        vm.scale(3, 3);
-    
-        for i in xrange(0,count):
-            Vectors.append(QPointF(0.1,0.25) * (m * vm));
-            Points.append(QPointF(0, 100) * m + center);
-            m.rotate(rot);
-        
-        self.m_paths.append(Points);
-        self.m_vectorsPath.append(Vectors);
-        self.m_Style.append(self.m_curve);
-        if(len(self.m_CurrentPoints) == 0):
-            self.m_CurrentPoints=Points;
-            self.m_CurrentVectors=Vectors;
-        self.repaint();
-    def setCurveLine(self,checked):
-        self.m_curve=checked;
-    def updatePoints(self):
-        pad = 10.0;
-        left = pad;
-        right = self.width() - pad;
-        top = pad;
-        bottom = self.height() - pad;
-    
-        for j in xrange(0,len(self.m_paths)):
-            CurrentPoints = self.m_paths[j];
-            CurrentVectors= self.m_vectorsPath[j];
-            for i in xrange(0,len(CurrentPoints)):
-                if (i == self.m_activePoint):
-                    continue;
-        
-                pos = CurrentPoints[i];
-                vec = CurrentVectors[i];
-                pos += vec;
-                if (pos.x() < left or pos.x() > right):
-                    vec.setX(-vec.x());
-                    if(pos.x() < left):
-                        pos.setX(left);
-                    else:
-                        pos.setX(right)
-                if (pos.y() < top or pos.y() > bottom):
-                    vec.setY(-vec.y());
-                    if(pos.y() < top):
-                        pos.setX(top);
-                    else:
-                        pos.setX(bottom)
-                CurrentPoints[i] = pos;
-                CurrentVectors[i] = vec;
-            self.update();
-
+    def getCurrentPath(self):
+        return self.currentPath;
     def mousePressEvent(self,e):
-        self.m_activePoint = -1;
+        
+        nbPaths = Data.getInstance().getNbEnemyPath();
         distance = -1;
-        for j in xrange(0,len(self.m_paths)):
-            CurrentPoints = self.m_paths[j];
-            CurrentVectors= self.m_vectorsPath[j];
-            for i in xrange(0,len(CurrentPoints)):
-                d = QLineF(QPointF(e.pos()), CurrentPoints[i]).length();
-                if ((distance < 0 and d < 8 * self.m_pointSize) or d < distance):
-                    distance = d;
-                    self.m_activePoint = i;
-                    self.m_CurrentPoints = CurrentPoints;
-                    self.m_CurrentVectors =CurrentVectors;           
-        if (self.m_activePoint != -1):
+        currentPoint = None;
+        currentPath = None;
+        for i in xrange(nbPaths):
+            path = Data.getInstance().getEnemyPath(i);
+            ePath = path.BezierSpline;
+            count = ePath.getCurveCount();
+            for j in xrange(count):
+                curve = ePath.getCurve(j);
+                for k in xrange(4):
+                    d = QLineF(e.pos().x(),e.pos().y(),curve.points[k].x,curve.points[k].y).length();
+                    if ((distance < 0 and d < 8 * self.m_pointSize) or d < distance):
+                        currentPoint = curve.points[k];
+                        currentPath = path;
+                        distance = d;
+        
+        if(distance != -1):
+            self.currentPath=currentPath;
+            self.currentPoint=currentPoint;
             self.mouseMoveEvent(e);
     
     def mouseDoubleClickEvent(self,e):
-        self.addPoint(e.pos())
+        if(self.currentPath is not None):
+            self.currentPath.AddPoint(Point(e.pos().x(),e.pos().y()));
+            self.update();
 
     def mouseMoveEvent(self,e):
-        if (self.m_activePoint >= 0 and self.m_activePoint < len(self.m_CurrentPoints)):
-            self.m_CurrentPoints[self.m_activePoint] = QPointF(e.pos());
+        if (self.currentPoint is not None):
+            self.currentPoint.x = e.pos().x();
+            self.currentPoint.y = e.pos().y();
             self.update();
 
     def mouseReleaseEvent(self,e):
-        self.m_activePoint = -1;
+        self.currentPoint = None;
 
     def setPenWidth(self,penWidth):
         self.m_penWidth = penWidth / 10.0; 
