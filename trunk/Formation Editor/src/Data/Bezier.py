@@ -11,10 +11,10 @@ class Point:
 class CubicBezier:
     def __init__(self,p1,p2,p3,p4):
         self.points = [];
-        self.points[0] = p1;
-        self.points[1] = p2;
-        self.points[2] = p3;
-        self.points[3] = p4;
+        self.points.append(p1);
+        self.points.append(p2);
+        self.points.append(p3);
+        self.points.append(p4);
     #returns (x,y) tuple (-1,-1) if error
     def getPoint(self,t):
         x=-1
@@ -40,7 +40,13 @@ class CubicBezier:
 class BezierSpline:
     def __init__(self):
         self.__curves=[];
-        
+    
+    def getCurveCount(self):
+        return len(self.__curves);
+    def getCurve(self,index):
+        if(index >= 0 and index < self.getCurveCount()):
+            return self.__curves[index];
+        return None;
     #if last point of the spline does not match with the first of c add nothing
     def addCurve(self,c):
         #Not first Curve

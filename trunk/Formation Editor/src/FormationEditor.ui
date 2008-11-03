@@ -13,14 +13,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>21</y>
-     <width>894</width>
-     <height>774</height>
-    </rect>
-   </property>
    <layout class="QHBoxLayout" >
     <item>
      <widget class="QGroupBox" name="Preview" >
@@ -59,17 +51,9 @@
        <item>
         <widget class="QTabWidget" name="ToolsTabs" >
          <property name="currentIndex" >
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>324</width>
-            <height>695</height>
-           </rect>
-          </property>
           <attribute name="title" >
            <string>Paths</string>
           </attribute>
@@ -203,14 +187,6 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tab_2" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>324</width>
-            <height>695</height>
-           </rect>
-          </property>
           <attribute name="title" >
            <string>Formation</string>
           </attribute>
@@ -233,62 +209,6 @@
                   <string>Description</string>
                  </property>
                 </column>
-                <item>
-                 <property name="text" >
-                  <string>Group1</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <item>
-                  <property name="text" >
-                   <string>Monsters</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>M1</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>M2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                 <item>
-                  <property name="text" >
-                   <string>Paths</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>P2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>P3</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                </item>
                </widget>
               </item>
               <item>
@@ -323,6 +243,9 @@
              <layout class="QVBoxLayout" name="verticalLayout_2" >
               <item>
                <widget class="QTreeWidget" name="Formation_MonstersList" >
+                <property name="selectionMode" >
+                 <enum>QAbstractItemView::MultiSelection</enum>
+                </property>
                 <column>
                  <property name="text" >
                   <string>Objects</string>
@@ -333,36 +256,12 @@
                   <string>Description</string>
                  </property>
                 </column>
-                <item>
-                 <property name="text" >
-                  <string>Monster1</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <item>
-                  <property name="text" >
-                   <string>Group1</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text" >
-                   <string>Group2</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                 </item>
-                </item>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label" >
+               <widget class="QLabel" name="Monster_ColorLabel" >
                 <property name="text" >
-                 <string>Color</string>
+                 <string>Color : 1</string>
                 </property>
                </widget>
               </item>
@@ -386,9 +285,9 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_2" >
+               <widget class="QLabel" name="Monster_SizeLabel" >
                 <property name="text" >
-                 <string>Size</string>
+                 <string>Size : 1</string>
                 </property>
                </widget>
               </item>
@@ -438,14 +337,6 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tab_3" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>324</width>
-            <height>695</height>
-           </rect>
-          </property>
           <attribute name="title" >
            <string>Association</string>
           </attribute>
@@ -475,62 +366,6 @@
                   <string>Description</string>
                  </property>
                 </column>
-                <item>
-                 <property name="text" >
-                  <string>Group1</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <item>
-                  <property name="text" >
-                   <string>Monsters</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>M1</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>M2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                 <item>
-                  <property name="text" >
-                   <string>Paths</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>P1</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>P2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                </item>
                </widget>
               </item>
               <item>
@@ -552,38 +387,6 @@
                   <string>Description</string>
                  </property>
                 </column>
-                <item>
-                 <property name="text" >
-                  <string>Path1</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <item>
-                  <property name="text" >
-                   <string>Groups</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>G1</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>G2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                </item>
                </widget>
               </item>
               <item>
@@ -615,7 +418,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_7" >
+               <widget class="QLabel" name="Association_TimeLabel" >
                 <property name="text" >
                  <string>Time Before : 0 s</string>
                 </property>
@@ -634,26 +437,31 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tab_4" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>324</width>
-            <height>695</height>
-           </rect>
-          </property>
           <attribute name="title" >
            <string>Time Line</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_8" >
+          <layout class="QVBoxLayout" name="verticalLayout_9" >
            <item>
-            <widget class="QGroupBox" name="Time_GroupsGroup" >
+            <widget class="QGroupBox" name="Time_OrderGroup" >
              <property name="title" >
-              <string>Groups</string>
+              <string>Groups  Order</string>
              </property>
-             <layout class="QVBoxLayout" name="_2" >
+             <layout class="QVBoxLayout" name="verticalLayout_6" >
+              <item>
+               <widget class="QLabel" name="label" >
+                <property name="text" >
+                 <string>Groups :</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QTreeWidget" name="Time_GroupsList" >
+                <property name="autoFillBackground" >
+                 <bool>false</bool>
+                </property>
+                <property name="sortingEnabled" >
+                 <bool>false</bool>
+                </property>
                 <column>
                  <property name="text" >
                   <string>Objects</string>
@@ -664,73 +472,15 @@
                   <string>Description</string>
                  </property>
                 </column>
-                <item>
-                 <property name="text" >
-                  <string>Group1</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <item>
-                  <property name="text" >
-                   <string>Monsters</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>M1</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>M2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                 <item>
-                  <property name="text" >
-                   <string>Paths</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>P2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>P3</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                </item>
                </widget>
               </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="Time_OrderGroup" >
-             <property name="title" >
-              <string>Time Order for current group</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6" >
+              <item>
+               <widget class="QLabel" name="label_2" >
+                <property name="text" >
+                 <string>Time Order For Current Group :</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QListWidget" name="Time_GroupOrder" />
               </item>
@@ -769,62 +519,6 @@
                   <string>Description</string>
                  </property>
                 </column>
-                <item>
-                 <property name="text" >
-                  <string>Path1</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <item>
-                  <property name="text" >
-                   <string>Group1</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>M1</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>M2</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                 <item>
-                  <property name="text" >
-                   <string>Group2</string>
-                  </property>
-                  <property name="text" >
-                   <string/>
-                  </property>
-                  <item>
-                   <property name="text" >
-                    <string>M3</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text" >
-                    <string>M4</string>
-                   </property>
-                   <property name="text" >
-                    <string/>
-                   </property>
-                  </item>
-                 </item>
-                </item>
                </widget>
               </item>
               <item>
@@ -863,16 +557,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>795</y>
-     <width>894</width>
-     <height>19</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
  </widget>
  <resources/>
  <connections/>
