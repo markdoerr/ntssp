@@ -3,7 +3,6 @@ from PyQt4 import QtCore, QtGui
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from FormationEditor import *
-import Monster;
 from PathStroke import *
 from Data.Data import *;
 from Data.Enemy import *;
@@ -75,7 +74,12 @@ class FormationEditorWindow(QtGui.QMainWindow):
     
     #Association Group:
     def Associate(self):
-        pass;
+        group = self.GetGroupSelected(self.ui.Association_GroupsList);
+        path = self.GetPathSelected(self.ui.Association_PathsList);
+        if(len(group) > 0 and len(path) > 0):
+            group[0].AddPath(path[0]);
+        self.UpdateGroups();
+        self.UpdatePaths();
     def TimeBeforeChange(self,value):
         pass;
     
@@ -100,6 +104,7 @@ class FormationEditorWindow(QtGui.QMainWindow):
         for i in selected :
             Data.getInstance().deleteMonster(i);
         self.UpdateMonsters();
+        self.UpdateGroups();
             
     def MonsterColorChange(self,value):
         self.ui.Monster_ColorLabel.setText("Color : " + str(value));
@@ -125,7 +130,7 @@ class FormationEditorWindow(QtGui.QMainWindow):
             self.ui.Formation_MonstersList.addTopLevelItem(self.GetMonsterUI(Data.getInstance().getMonster(i)));
     def GetMonsterUI(self,monster):
         item = QTreeWidgetItem();
-        item.setText(0,"Monster : " + str(monster.size) + ", " + str(monster.life));
+        item.setText(0,"Monster (" + str(monster.id) + ")");
         item.setText(1,"Life : "+str(monster.life) +", Size : "+str(monster.size))
         return item;    
     
@@ -161,23 +166,28 @@ class FormationEditorWindow(QtGui.QMainWindow):
         for i in selected :
             Data.getInstance().deleteGroup(i);
         self.UpdateGroups();
+        self.UpdatePaths();
     def UpdateGroups(self):
         self.ui.Formation_GroupsList.clear();
         self.ui.Association_GroupsList.clear();
         self.ui.Time_GroupsList.clear();
         for i in xrange(Data.getInstance().getNbGroups()):
-            item = self.GetGroupUI(Data.getInstance().getGroup(i),i);
+            item = self.GetGroupUI(Data.getInstance().getGroup(i));
             self.ui.Formation_GroupsList.addTopLevelItem(item);
-            item = self.GetGroupUI(Data.getInstance().getGroup(i),i);
+            item = self.GetGroupUI(Data.getInstance().getGroup(i));
             self.ui.Association_GroupsList.addTopLevelItem(item);
-            item = self.GetGroupUI(Data.getInstance().getGroup(i),i);
+            item = self.GetGroupUI(Data.getInstance().getGroup(i));
             self.ui.Time_GroupsList.addTopLevelItem(item);
-    def GetGroupUI(self,group,index):
+    def GetGroupUI(self,group):
         item = QTreeWidgetItem();
-        item.setText(0,"Group " + str(index));
+        item.setText(0,"Group (" + str(group.id) +")");
         for monster in group.enemies:
            uimonster = self.GetMonsterUI(monster);
            item.addChild(uimonster);
+        for path in group.paths:
+            g = QTreeWidgetItem();
+            g.setText(0,"Path (" + str(path.id) +")");
+            item.addChild(g);
         return item;   
     
     #Path Group
@@ -185,11 +195,14 @@ class FormationEditorWindow(QtGui.QMainWindow):
         effectType = self.ui.Path_EffectStyle.currentIndex();
         path = Data.getInstance().newEnemyPath(effectType, 1.0, 1.0);   
         self.m_renderer.currentPath = path;
-        self.m_renderer.update();   
+        self.m_renderer.update(); 
+        self.UpdatePaths();
     def DeletePath(self):
         current = self.m_renderer.getCurrentPath();
         Data.getInstance().deleteEnemyPath(current);
         self.m_renderer.update();
+        self.UpdatePaths();
+        self.UpdateGroups();
     def Curve(self):
         self.ui.Line.setChecked(False);
         self.m_renderer.setCurveLine(True);
@@ -197,8 +210,33 @@ class FormationEditorWindow(QtGui.QMainWindow):
         self.ui.Curve.setChecked(False);
         self.m_renderer.setCurveLine(False);
     def UpdatePaths(self):
-        pass
-    
+        self.ui.Association_PathsList.clear();
+        for i in xrange(Data.getInstance().getNbEnemyPath()):
+            item = self.GetPathUI(Data.getInstance().getEnemyPath(i));
+            self.ui.Association_PathsList.addTopLevelItem(item);
+    def GetPathUI(self,path):
+        item = QTreeWidgetItem();
+        item.setText(0,"Path (" + str(path.id) +")");
+        groups = Data.getInstance().getGroupsForPath(path);
+        for group in groups:
+            g = QTreeWidgetItem();
+            g.setText(0,"Group (" + str(group.id) +")");
+            item.addChild(g);
+        return item;  
+    def GetPathSelected(self,list):
+        selected = [];
+        items = list.selectedIndexes();
+        for i in items:
+            if(i.column() == 0):
+                selected.append(Data.getInstance().getEnemyPath(i.row()));
+        return selected;
+    def GetPathSelectedIndexes(self,list):
+        selected = [];
+        items = list.selectedIndexes();
+        for i in items:
+            if(i.column() == 0):
+                selected.append(i.row());
+        return selected;
     #Pen Width
     def SetPenWidth(self,val):
         pass
