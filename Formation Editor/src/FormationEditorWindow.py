@@ -56,32 +56,78 @@ class FormationEditorWindow(QtGui.QMainWindow):
         QObject.connect(self.ui.Association_TimeBefore,SIGNAL("sliderMoved(int)"),self.TimeBeforeChange);
         
         #Time Tab:
+        QObject.connect(self.ui.Time_GroupsList,SIGNAL("itemSelectionChanged()"),self.TimeCurrentGroupChange);
         QObject.connect(self.ui.Time_OrderUp,SIGNAL("clicked(bool)"),self.TimeOrderCurrentUp);
         QObject.connect(self.ui.Time_OrderDown,SIGNAL("clicked(bool)"),self.TimeOrderCurrentDown);
-        QObject.connect(self.ui.Time_OrderGlobalDown,SIGNAL("clicked(bool)"),self.TimeOrderGlobalDown);
-        QObject.connect(self.ui.Time_OrderGlobalUp,SIGNAL("clicked(bool)"),self.TimeOrderGlobalUp);
+        QObject.connect(self.ui.Time_GroupUp,SIGNAL("clicked(bool)"),self.TimeGroupUp);
+        QObject.connect(self.ui.Time_GroupDown,SIGNAL("clicked(bool)"),self.TimeGroupDown);
+        QObject.connect(self.ui.Time_Delete,SIGNAL("clicked(bool)"),self.TimeDelete);
         
     
     #TimeTab:
+    def TimeCurrentGroupChange(self):
+        group = self.GetGroupSelected(self.ui.Time_GroupsList);
+        if(len(group) > 0):
+            self.UpdateCurrentTimeOrder(group[0]);
     def TimeOrderCurrentUp(self):
-        pass;
+        group = self.GetGroupSelected(self.ui.Time_GroupsList);
+        path = self.TimeCurrentGetPathSelected();
+        if(path is not None):
+            group[0].UpPath(path);
+            self.TimeCurrentGroupChange();
+            self.ui.Time_GroupOrder.setCurrentItem(self.ui.Time_GroupOrder.topLevelItem(group[0].paths.index(path)));
+        
     def TimeOrderCurrentDown(self):
-        pass;
-    def TimeOrderGlobalUp(self):
-        pass;
-    def TimeOrderGlobalDown(self):
-        pass;
+        group = self.GetGroupSelected(self.ui.Time_GroupsList);
+        path = self.TimeCurrentGetPathSelected();
+        if(len(group) > 0 and path is not None):
+            group[0].DownPath(path);
+            self.TimeCurrentGroupChange();
+            self.ui.Time_GroupOrder.setCurrentItem(self.ui.Time_GroupOrder.topLevelItem(group[0].paths.index(path)));
+            
+    def TimeGroupUp(self):
+        group = self.GetGroupSelected(self.ui.Time_GroupsList);
+        if(len(group) > 0):
+            i = Data.getInstance().GroupUp(group[0]);
+            self.UpdateGroups();
+            self.ui.Time_GroupsList.setCurrentItem(self.ui.Time_GroupsList.topLevelItem(i));
+    def TimeGroupDown(self):
+        group = self.GetGroupSelected(self.ui.Time_GroupsList);
+        if(len(group) > 0):
+            i = Data.getInstance().GroupDown(group[0]);
+            self.UpdateGroups();
+            self.ui.Time_GroupsList.setCurrentItem(self.ui.Time_GroupsList.topLevelItem(i));    
+    def TimeCurrentGetPathSelected(self):
+        group = self.GetGroupSelected(self.ui.Time_GroupsList);
+        if(len(group) > 0):
+            inds = self.ui.Time_GroupOrder.selectedIndexes();
+            if(len(inds) > 0):
+                index = inds[0].row();
+                return group[0].paths[index];
+        return None;
+    def TimeDelete(self):
+        path = self.TimeCurrentGetPathSelected();
+        if(path is not None):
+            Data.getInstance().deleteEnemyPath(path);
+            self.UpdateGroups();
+    def UpdateCurrentTimeOrder(self,current):
+        self.ui.Time_GroupOrder.clear();
+        for i in current.paths:
+            if(current.assoc[i].type == Group.WhenPlayerIsFound):
+                continue;
+            item = self.GetPathUI(i);
+            self.ui.Time_GroupOrder.addTopLevelItem(item);
     
     #Association Group:
     def Associate(self):
         group = self.GetGroupSelected(self.ui.Association_GroupsList);
         path = self.GetPathSelected(self.ui.Association_PathsList);
         if(len(group) > 0 and len(path) > 0):
-            group[0].AddPath(path[0]);
+            group[0].AddPath(path[0],self.ui.Association_Type.currentIndex(),self.ui.Association_TimeBefore.value()/10.0);
         self.UpdateGroups();
         self.UpdatePaths();
     def TimeBeforeChange(self,value):
-        pass;
+        self.ui.Association_TimeLabel.setText("Time Before: " + str(value/10.0)+"s");
     
     #Monsters Group
     def AddMonster(self):
@@ -168,16 +214,28 @@ class FormationEditorWindow(QtGui.QMainWindow):
         self.UpdateGroups();
         self.UpdatePaths();
     def UpdateGroups(self):
+        formsel = self.GetGroupSelected(self.ui.Formation_GroupsList);
+        assocsel = self.GetGroupSelected(self.ui.Association_GroupsList);
+        timesel = self.GetGroupSelected(self.ui.Time_GroupsList);
         self.ui.Formation_GroupsList.clear();
         self.ui.Association_GroupsList.clear();
         self.ui.Time_GroupsList.clear();
         for i in xrange(Data.getInstance().getNbGroups()):
-            item = self.GetGroupUI(Data.getInstance().getGroup(i));
+            group = Data.getInstance().getGroup(i);
+            item = self.GetGroupUI(group);
             self.ui.Formation_GroupsList.addTopLevelItem(item);
-            item = self.GetGroupUI(Data.getInstance().getGroup(i));
+            if(len(formsel)>0 and formsel[0] is group):
+                self.ui.Formation_GroupsList.setCurrentItem(item);
+                
+            item = self.GetGroupUI(group);
             self.ui.Association_GroupsList.addTopLevelItem(item);
-            item = self.GetGroupUI(Data.getInstance().getGroup(i));
+            if(len(assocsel)>0 and assocsel[0] is group):
+                self.ui.Association_GroupsList.setCurrentItem(item);
+                
+            item = self.GetGroupUI(group);
             self.ui.Time_GroupsList.addTopLevelItem(item);
+            if(len(timesel)>0 and timesel[0] is group):
+                self.ui.Time_GroupsList.setCurrentItem(item);
     def GetGroupUI(self,group):
         item = QTreeWidgetItem();
         item.setText(0,"Group (" + str(group.id) +")");
@@ -186,7 +244,12 @@ class FormationEditorWindow(QtGui.QMainWindow):
            item.addChild(uimonster);
         for path in group.paths:
             g = QTreeWidgetItem();
+            if(group.assoc[path].type == Group.End):
+                text = "When End";
+            else:
+                text = "When Player is Found"
             g.setText(0,"Path (" + str(path.id) +")");
+            g.setText(1,text);
             item.addChild(g);
         return item;   
     
@@ -210,10 +273,16 @@ class FormationEditorWindow(QtGui.QMainWindow):
         self.ui.Curve.setChecked(False);
         self.m_renderer.setCurveLine(False);
     def UpdatePaths(self):
+        assocSelected = self.GetPathSelected(self.ui.Association_PathsList);
         self.ui.Association_PathsList.clear();
         for i in xrange(Data.getInstance().getNbEnemyPath()):
-            item = self.GetPathUI(Data.getInstance().getEnemyPath(i));
+            path = Data.getInstance().getEnemyPath(i);
+            item = self.GetPathUI(path);
             self.ui.Association_PathsList.addTopLevelItem(item);
+            if(len(assocSelected)>0 and assocSelected[0] is path):
+                self.ui.Association_PathsList.setCurrentItem(item);
+                
+            
     def GetPathUI(self,path):
         item = QTreeWidgetItem();
         item.setText(0,"Path (" + str(path.id) +")");
