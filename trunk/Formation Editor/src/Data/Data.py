@@ -10,24 +10,18 @@ class Data:
         self.__currentFormation = None;
         self.__monsters = [];
     def getMonster(self,i):
-        return self.__monsters[i];
-    
-    def updateIds(self,vect):
-        i = 0;
-        for v in vect:
-            v.id = i;
-            i = i+1;
+        if(i>=0 and i<len(self.__monsters)):
+           return self.__monsters[i];
+        return None;
     def newMonster(self,life,size,position):
         monster = Enemy.Enemy(life,size,position);
         self.__monsters.append(monster);
-        self.updateIds(self.__monsters);
     
     def deleteMonster(self,index):
         monster = self.__monsters.pop(index);
         groups = self.getGroupsForEnemy(monster);
         for group in groups:
             groups.DeleteEnemy(monster);
-        self.updateIds(self.__monsters);
     
     def getNbMonster(self):
         return len(self.__monsters);
@@ -36,13 +30,14 @@ class Data:
         for e in enemies:
             group.AddEnemy(e);
         self.__groups.append(group);
-        self.updateIds(self.__groups);
         return group;
     def deleteGroup(self,i):
         self.__groups.pop(i);
-        self.updateIds(self.__groups);
     def getGroup(self,i):
-        return self.__groups[i];
+        if(i >= 0 and i < len(self.__groups)):
+           return self.__groups[i];
+        else:
+            return None;
     
     def getNbGroups(self):
         return len(self.__groups);
@@ -56,7 +51,6 @@ class Data:
     def newEnemyPath(self,effect,speed,timeBeetweenEnemies):
         path = EnemyPath(effect,speed,timeBeetweenEnemies);
         self.__paths.append(path);
-        self.updateIds(self.__paths);
         return path;
     def getGroupsForEnemy(self,enemy):
         groups=[];
@@ -70,22 +64,38 @@ class Data:
             if(group.ContainsPath(path)):
                 groups.append(group);
         return groups;
+    def GroupUp(self,group):
+        index = self.__groups.index(group);
+        if(index > 0):
+            tmp = self.__groups[index-1];
+            self.__groups[index-1] = group;
+            self.__groups[index] = tmp;
+            return index - 1;
+        return index;
+    def GroupDown(self,group):
+        index = self.__groups.index(group);
+        if(index < self.getNbGroups()-1):
+            tmp = self.__groups[index+1];
+            self.__groups[index+1] = group;
+            self.__groups[index] = tmp;
+            return index + 1;
+        return index;
     def getEnemyPath(self,index):
-        return self.__paths[index];
+        if(index >= 0 and index < len(self.__paths)):
+            return self.__paths[index];
+        return None;
     def getNbEnemyPath(self):
         return len(self.__paths);
     def deleteEnemyPathByIndex(self,index):
         path = self.__paths.pop(index);
         groups = self.getGroupsForPath(path);
         for group in groups:
-            groups.DeleteEnemy(path);
-        self.updateIds(self.__paths);
+            group.DeletePath(path);
     def deleteEnemyPath(self,path):
         self.__paths.remove(path);
         groups = self.getGroupsForPath(path);
         for group in groups:
-            groups.DeleteEnemy(path);
-        self.updateIds(self.__paths);
+            group.DeletePath(path);
     @classmethod    
     def getInstance(cls):
         if(cls.instance is None):

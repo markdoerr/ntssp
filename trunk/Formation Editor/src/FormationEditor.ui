@@ -51,7 +51,7 @@
        <item>
         <widget class="QTabWidget" name="ToolsTabs" >
          <property name="currentIndex" >
-          <number>1</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab" >
           <attribute name="title" >
@@ -426,6 +426,9 @@
               </item>
               <item>
                <widget class="QSlider" name="Association_TimeBefore" >
+                <property name="maximum" >
+                 <number>100</number>
+                </property>
                 <property name="orientation" >
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -440,7 +443,7 @@
           <attribute name="title" >
            <string>Time Line</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_9" >
+          <layout class="QVBoxLayout" name="verticalLayout_7" >
            <item>
             <widget class="QGroupBox" name="Time_OrderGroup" >
              <property name="title" >
@@ -450,7 +453,7 @@
               <item>
                <widget class="QLabel" name="label" >
                 <property name="text" >
-                 <string>Groups :</string>
+                 <string>Global Groups Order :</string>
                 </property>
                </widget>
               </item>
@@ -475,6 +478,20 @@
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="Time_GroupUp" >
+                <property name="text" >
+                 <string>Up</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_GroupDown" >
+                <property name="text" >
+                 <string>Down</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="label_2" >
                 <property name="text" >
                  <string>Time Order For Current Group :</string>
@@ -482,33 +499,13 @@
                </widget>
               </item>
               <item>
-               <widget class="QListWidget" name="Time_GroupOrder" />
-              </item>
-              <item>
-               <widget class="QPushButton" name="Time_OrderUp" >
-                <property name="text" >
-                 <string>Up</string>
+               <widget class="QTreeWidget" name="Time_GroupOrder" >
+                <property name="autoFillBackground" >
+                 <bool>false</bool>
                 </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Time_OrderDown" >
-                <property name="text" >
-                 <string>Down</string>
+                <property name="sortingEnabled" >
+                 <bool>false</bool>
                 </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="Time_OrderGlobalGroup" >
-             <property name="title" >
-              <string>Time Order Global</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_7" >
-              <item>
-               <widget class="QTreeWidget" name="Time_GroupTimeGlobal" >
                 <column>
                  <property name="text" >
                   <string>Objects</string>
@@ -522,14 +519,21 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Time_OrderGlobalUp" >
+               <widget class="QPushButton" name="Time_Delete" >
+                <property name="text" >
+                 <string>Delete</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_OrderUp" >
                 <property name="text" >
                  <string>Up</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Time_OrderGlobalDown" >
+               <widget class="QPushButton" name="Time_OrderDown" >
                 <property name="text" >
                  <string>Down</string>
                 </property>

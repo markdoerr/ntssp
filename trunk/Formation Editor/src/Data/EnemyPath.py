@@ -10,7 +10,10 @@ MAX_POINTS = 10000;
 MAX_ENEMIES_IN_FORMATION=20;
 OUT_SCREEN = (-500,-500);
 class EnemyPath:
+    PathID = 0;
     def __init__(self,effect = EffectType.Zero,speed=1.0,timeBeetweenEnemies=1.0):
+        self.id = EnemyPath.PathID;
+        EnemyPath.PathID = EnemyPath.PathID + 1;
         self.effect = effect;
         self.BezierSpline = BezierSpline();
         self.speed = speed;
@@ -20,6 +23,7 @@ class EnemyPath:
         self.__lastEnemy=0;
         self.__interTime=0;
         self.__lastPoint=Point(400,400);
+        self.AddPoint(Point(400,300));
     def AddPoint(self,point):
         p1 = self.__lastPoint;
         p4 = point;
