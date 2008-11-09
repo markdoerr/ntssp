@@ -43,6 +43,8 @@ class FormationEditorWindow(QtGui.QMainWindow):
         QObject.connect(self.ui.Groups_Add,SIGNAL("clicked(bool)"),self.AddGroup);
         QObject.connect(self.ui.Groups_Change, SIGNAL("clicked(bool)"),self.ChangeGroup);
         QObject.connect(self.ui.Groups_Delete, SIGNAL("clicked(bool)"),self.DeleteGroup);
+        QObject.connect(self.ui.Formation_GroupDiffTime,SIGNAL("sliderMoved(int)"),self.GroupDiffTimeChange);
+        QObject.connect(self.ui.Formation_GroupSpeed,SIGNAL("sliderMoved(int)"),self.GroupSpeedChange);
         
         #Monsters Group:
         QObject.connect(self.ui.Monsters_Add,SIGNAL("clicked(bool)"),self.AddMonster);
@@ -182,10 +184,17 @@ class FormationEditorWindow(QtGui.QMainWindow):
     
     
     #Groups Group
+    def GroupDiffTimeChange(self,i):
+        self.ui.Formation_GroupDiffTimeLabel.setText("DiffTime: "+str(i/10.0) +"s");
+    def GroupSpeedChange(self,i):
+        self.ui.Formation_GroupSpeedLabel.setText("Speed: "+str(i/10.0));
     def AddGroup(self):
         enemies = self.GetMonsterSelected();
         if(len(enemies) > 0):
-            Data.getInstance().newGroup(enemies);
+            speed = self.ui.Formation_GroupSpeed.value() / 10.0;
+            diffTime = self.ui.Formation_GroupDiffTime.value() / 10.0;
+            type = self.ui.Formation_GroupEffectStyle.currentIndex();
+            Data.getInstance().newGroup(enemies,type,speed,diffTime);
             self.UpdateGroups()
     def GetGroupSelected(self,list):
         selected = [];
@@ -239,6 +248,7 @@ class FormationEditorWindow(QtGui.QMainWindow):
     def GetGroupUI(self,group):
         item = QTreeWidgetItem();
         item.setText(0,"Group (" + str(group.id) +")");
+        item.setText(1,"Type:" + EffectType.getText(group.type) + " Speed:" + str(group.speed) + " DiffTime:" + str(group.diffTime))
         for monster in group.enemies:
            uimonster = self.GetMonsterUI(monster);
            item.addChild(uimonster);
@@ -255,8 +265,7 @@ class FormationEditorWindow(QtGui.QMainWindow):
     
     #Path Group
     def AddPath(self):
-        effectType = self.ui.Path_EffectStyle.currentIndex();
-        path = Data.getInstance().newEnemyPath(effectType, 1.0, 1.0);   
+        path = Data.getInstance().newEnemyPath();   
         self.m_renderer.currentPath = path;
         self.m_renderer.update(); 
         self.UpdatePaths();

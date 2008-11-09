@@ -51,7 +51,7 @@
        <item>
         <widget class="QTabWidget" name="ToolsTabs" >
          <property name="currentIndex" >
-          <number>3</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab" >
           <attribute name="title" >
@@ -93,53 +93,6 @@
                 <property name="text" >
                  <string>Delete Path</string>
                 </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_3" >
-                <property name="maximumSize" >
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text" >
-                 <string>Effect Style</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="Path_EffectStyle" >
-                <item>
-                 <property name="text" >
-                  <string>Normal</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>Fixed</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>Circle</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>Switch</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>Rotate</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>Arc</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>
@@ -190,13 +143,13 @@
           <attribute name="title" >
            <string>Formation</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_3" >
+          <layout class="QVBoxLayout" name="verticalLayout_8" >
            <item>
             <widget class="QGroupBox" name="Formation_GroupsGroup" >
              <property name="title" >
               <string>Groups</string>
              </property>
-             <layout class="QVBoxLayout" >
+             <layout class="QVBoxLayout" name="verticalLayout_3" >
               <item>
                <widget class="QTreeWidget" name="Formation_GroupsList" >
                 <column>
@@ -209,6 +162,151 @@
                   <string>Description</string>
                  </property>
                 </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" native="1" name="widget_2" >
+                <layout class="QHBoxLayout" name="horizontalLayout_2" >
+                 <item>
+                  <widget class="QLabel" name="Formation_GroupSpeedLabel" >
+                   <property name="text" >
+                    <string>Speed: 0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_3" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Formation_GroupDiffTimeLabel" >
+                   <property name="text" >
+                    <string>DiffTime: 0s</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_4" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_3" >
+                   <property name="text" >
+                    <string>Effect Type:</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" native="1" name="widget" >
+                <layout class="QHBoxLayout" name="horizontalLayout" >
+                 <item>
+                  <widget class="QSlider" name="Formation_GroupSpeed" >
+                   <property name="minimum" >
+                    <number>1</number>
+                   </property>
+                   <property name="maximum" >
+                    <number>100</number>
+                   </property>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="Formation_GroupDiffTime" >
+                   <property name="minimum" >
+                    <number>1</number>
+                   </property>
+                   <property name="maximum" >
+                    <number>100</number>
+                   </property>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="Formation_GroupEffectStyle" >
+                   <item>
+                    <property name="text" >
+                     <string>Normal</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Fixed</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Circle</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Switch</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Rotate</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Arc</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item>

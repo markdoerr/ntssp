@@ -17,7 +17,17 @@ class Enemy:
         
     def toString(self):
         return "Enemy : " + str(self.life) +", "+str(self.size);
-
+class EffectType:
+    Circle = 0;
+    Switch = 1;
+    Rotate = 2;
+    Arc = 3;
+    Zero = 4;
+    text = ["Circle","Switch","Rotate","Arc","Normal"];
+    @classmethod
+    def getText(cls,type):
+        return cls.text[type];
+    
 class Association:
     def __init__(self,group,path,type,timeBefore):
         self.group = group;
@@ -28,7 +38,10 @@ class Group:
     GroupID = 0;
     WhenPlayerIsFound = 1;
     End = 0;
-    def __init__(self):
+    def __init__(self,effect = EffectType.Zero,speed=1.0,timeBeetweenEnemies=1.0):
+        self.type = effect;
+        self.speed = speed;
+        self.diffTime = timeBeetweenEnemies;
         self.id = Group.GroupID;
         Group.GroupID = Group.GroupID + 1;
         #table of enemies
