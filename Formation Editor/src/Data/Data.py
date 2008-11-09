@@ -25,8 +25,8 @@ class Data:
     
     def getNbMonster(self):
         return len(self.__monsters);
-    def newGroup(self,enemies):
-        group = Enemy.Group();
+    def newGroup(self,enemies,effectType,speed,diffTime):
+        group = Enemy.Group(effectType,speed,diffTime);
         for e in enemies:
             group.AddEnemy(e);
         self.__groups.append(group);
@@ -48,8 +48,8 @@ class Data:
     def getCurrentFormation(self):
         return self.__currentFormation;
     
-    def newEnemyPath(self,effect,speed,timeBeetweenEnemies):
-        path = EnemyPath(effect,speed,timeBeetweenEnemies);
+    def newEnemyPath(self):
+        path = EnemyPath();
         self.__paths.append(path);
         return path;
     def getGroupsForEnemy(self,enemy):
