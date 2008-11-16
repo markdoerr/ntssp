@@ -19,6 +19,8 @@ class PathStrokeRenderer(QWidget):
         self.m_penStyle = Qt.SolidLine;
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding);
         self.setFixedSize(800,600)
+        self.Animation = False;
+        self.AnimEngine = None;
     def paintEvent(self,e):
         static_image = 0;
         painter = QPainter();
@@ -40,35 +42,41 @@ class PathStrokeRenderer(QWidget):
     
     def paint(self,painter):
 
-        nbPaths = Data.getInstance().getNbEnemyPath();
-        
-        for i in xrange(nbPaths):
-            ePath = Data.getInstance().getEnemyPath(i).BezierSpline;
-            path = QPainterPath();
-            count = ePath.getCurveCount();
-            if(count == 0):
-                continue;
-            path.moveTo(ePath.getCurve(0).points[0].x,ePath.getCurve(0).points[0].y);
-            lg = self.m_colors[i%len(self.m_colors)];
-            for j in xrange(count):
-                curve = ePath.getCurve(j);
-                path.cubicTo(curve.points[1].x,curve.points[1].y,curve.points[2].x,curve.points[2].y,curve.points[3].x,curve.points[3].y);
-                for k in xrange(0,4):
-                    #Control Points
-                    painter.setPen(QColor(50, 100, 120, 200));
-                    painter.setBrush(QColor(50, 100, 120, 120));
-                    painter.drawEllipse(QRectF(curve.points[k].x - self.m_pointSize,curve.points[k].y - self.m_pointSize,self.m_pointSize*2, self.m_pointSize*2));
-                    
-                    if(k > 0):
-                        painter.setPen(lg);
-                        painter.setBrush(Qt.NoBrush);
-                                        
-                        #Control Line
-                        painter.setPen(QPen(Qt.black, 0, Qt.SolidLine));
-                        painter.drawLine(curve.points[k-1].x,curve.points[k-1].y,curve.points[k].x,curve.points[k].y);
+        if(not self.Animation):
+            nbPaths = Data.getInstance().getNbEnemyPath();
             
-            pen = QPen(lg, self.m_penWidth, self.m_penStyle, self.m_capStyle, self.m_joinStyle);
-            painter.strokePath(path, pen);
+            for i in xrange(nbPaths):
+                ePath = Data.getInstance().getEnemyPath(i).BezierSpline;
+                path = QPainterPath();
+                count = ePath.getCurveCount();
+                if(count == 0):
+                    continue;
+                path.moveTo(ePath.getCurve(0).points[0].x,ePath.getCurve(0).points[0].y);
+                lg = self.m_colors[i%len(self.m_colors)];
+                for j in xrange(count):
+                    curve = ePath.getCurve(j);
+                    path.cubicTo(curve.points[1].x,curve.points[1].y,curve.points[2].x,curve.points[2].y,curve.points[3].x,curve.points[3].y);
+                    for k in xrange(0,4):
+                        #Control Points
+                        painter.setPen(QColor(50, 100, 120, 200));
+                        painter.setBrush(QColor(50, 100, 120, 120));
+                        painter.drawEllipse(QRectF(curve.points[k].x - self.m_pointSize,curve.points[k].y - self.m_pointSize,self.m_pointSize*2, self.m_pointSize*2));
+                        
+                        if(k > 0):
+                            painter.setPen(lg);
+                            painter.setBrush(Qt.NoBrush);
+                                            
+                            #Control Line
+                            painter.setPen(QPen(Qt.black, 0, Qt.SolidLine));
+                            painter.drawLine(curve.points[k-1].x,curve.points[k-1].y,curve.points[k].x,curve.points[k].y);
+                
+                pen = QPen(lg, self.m_penWidth, self.m_penStyle, self.m_capStyle, self.m_joinStyle);
+                painter.strokePath(path, pen);
+        else:
+            self.AnimEngine.GlobalAnimation();
+            nbM = Data.getInstance().getNbMonster();
+            for i in xrange(nbM):
+                painter.drawEllipse(QRectF(Data.getInstance().getMonster(i).x - self.m_pointSize,Data.getInstance().getMonster(i).y - self.m_pointSize,self.m_pointSize*2, self.m_pointSize*2));
 
     def getCurrentPath(self):
         return self.currentPath;
