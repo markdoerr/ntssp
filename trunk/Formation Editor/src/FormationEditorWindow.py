@@ -6,6 +6,7 @@ from FormationEditor import *
 from PathStroke import *
 from Data.Data import *;
 from Data.Enemy import *;
+from Animation.Engine import *;
 
 class FormationEditorWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -321,7 +322,11 @@ class FormationEditorWindow(QtGui.QMainWindow):
     
     #GlobalGroup
     def Animate(self):
-        pass
+        self.m_renderer.Animation = True;
+        self.m_renderer.AnimEngine = Engine(Data.getInstance().getGroups());
+        self.timer = QTimer();
+        QObject.connect(self.timer,SIGNAL("timeout()"),self.m_renderer.repaint);
+        self.timer.start(200);
     def Save(self):
         pass
         

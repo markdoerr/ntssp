@@ -33,6 +33,9 @@ class Data:
         return group;
     def deleteGroup(self,i):
         self.__groups.pop(i);
+    #TODO change this
+    def getGroups(self):
+        return self.__groups;
     def getGroup(self,i):
         if(i >= 0 and i < len(self.__groups)):
            return self.__groups[i];

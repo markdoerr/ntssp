@@ -14,17 +14,19 @@ class Enemy:
         #Position
         self.x = position.x;
         self.y = position.y;
+        self.groups = [];
         
     def toString(self):
         return "Enemy : " + str(self.life) +", "+str(self.size);
 class EffectType:
-    Circle = 0;
-    Switch = 1;
-    Rotate = 2;
-    Arc = 3;
-    Zero = 4;
+    Zero = 0;
+    Circle = 1;
+    Switch = 2;
+    Rotate = 3;
+    Arc = 4;
     text = ["Circle","Switch","Rotate","Arc","Normal"];
-    @classmethod
+    
+    @classmethod 
     def getText(cls,type):
         return cls.text[type];
     
@@ -68,6 +70,14 @@ class Group:
             tmp = self.paths[index-1];
             self.paths[index-1] = path;
             self.paths[index] = tmp;
+    def clone(self):
+        clone = Group(self.type,self.speed,self.diffTime);
+        clone.id = self.id;
+        Group.GroupID -= 1;
+        clone.enemies = self.enemies[:];
+        clone.paths = self.paths[:];
+        clone.assoc = self.assoc.copy();
+        return clone;
     def DownPath(self,path):
         index = self.paths.index(path);
         if(index < len(self.paths) - 1):

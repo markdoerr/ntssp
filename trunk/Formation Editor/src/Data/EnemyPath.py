@@ -1,10 +1,4 @@
 from Bezier import *;
-class EffectType:
-    Circle = 0;
-    Switch = 1;
-    Rotate = 2;
-    Arc = 3;
-    Zero = 4;
 
 MAX_POINTS = 10000;
 MAX_ENEMIES_IN_FORMATION=20;
@@ -26,16 +20,6 @@ class EnemyPath:
         p3 = Point(p1.x + vx * 2.0/3.0,p1.y + vy * 2.0/3.0);
         self.BezierSpline.addCurve(CubicBezier(p1,p2,p3,p4));
         self.__lastPoint = p4;
-    #num (enemy number in the formation )
-    def getNextPoint(self,num):
-        next = OUT_SCREEN;
-        if(num <= self.__lastEnemy):
-            next = self.BezierSpline.getPoint(self.__t,self.__max);
-            self.__t = self.__t + 1;
-        self.__interTime = self.__interTime + 1;
-        if(self.__interTime == self.timeBeetweenEnemies):
-            self.__lastEnemy = max(self.__lastEnemy + 1,MAX_ENEMIES_IN_FORMATION);
-        return next;
 
 
 class CirclePath(EnemyPath):
