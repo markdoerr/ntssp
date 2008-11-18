@@ -65,7 +65,7 @@ class CubicBezier:
         self.q4 = 4.0*(k2.x*k3.x + k2.y*k3.y);
         self.q5 = sqr(k3.x) + sqr(k3.y);
     
-        result = Simpson(self.__balf, 0, 1, 1024, 0.001);
+        result = self.__Simpson(self.__balf, 0, 1, 1024, 0.001);
         return result;
 
     #Bezier Arc Length Function
@@ -99,6 +99,7 @@ class CubicBezier:
 class BezierSpline:
     def __init__(self):
         self.__curves=[];
+        self.__length = 0;
     
     def getCurveCount(self):
         return len(self.__curves);
@@ -113,10 +114,26 @@ class BezierSpline:
             if(self.__curves[-1].points[-1] != c.points[0]):
                 return;
         self.__curves.append(c);
-    #t from 0 to max, returns (x,y)
-    def getPoint(self,t,max):
-        #TODO change for Length of the Curve
-        perC = 1.0 / len(self.__curves);
-        n = min(int(t / perC),len(self.__curves)-1);
-        rt = t/perC - n;
+    def update(self):
+        total = 0;
+        for c in self.__curves:
+            c.update();
+            total += c.length();
+        self.__length = total;
+    def length(self):
+        return self.__length;
+        
+    #t from 0 to 1
+    def getPoint(self,t):
+        totalper = 0;
+        n = 0;
+        per = 0;
+        for c in self.__curves:
+            per = c.length()/self.length();
+            totalper += per;
+            if(t < totalper):
+                break;
+            n += 1;
+        totalper -= per;
+        rt = (t - totalper)/per;
         return self.__curves[n].getPoint(rt);
