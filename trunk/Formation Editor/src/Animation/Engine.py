@@ -33,12 +33,13 @@ class NormalEffect(GroupEffect):
         if(len(group.paths) > 0):
             for e in self.group.enemies:
                 e.__currentPath = self.group.paths[0];
+                e.__currentPath.BezierSpline.update();
                 e.__currentPathPercent = 0;
                 e.__currentPathIndex = 0;
             self.enemiesIndex = 0;
             
             #TODO change for the length of the path
-            self.nbPoints = int(10000.0 / group.speed);
+            self.nbPoints = int(1000.0 / group.speed);
             self.nbPointsInter = int(group.diffTime * FPS);
             self.globalPoints = 0;
     def getName(self):
@@ -60,13 +61,13 @@ class NormalEffect(GroupEffect):
                 percent = e.__currentPathPercent;
                 
                 #Get New position
-                coord = path.BezierSpline.getPoint(percent/100.0,self.nbPoints);
+                coord = path.BezierSpline.getPoint(float(percent)/float(self.nbPoints));
                 
                 #Update Position
                 e.x = coord[0];
                 e.y = coord[1];
                 
-                if(percent == 100):
+                if(percent == self.nbPoints):
                     e.__currentPathIndex = e.__currentPathIndex + 1;
                     if(e.__currentPathIndex >= len(self.group.paths)):
                         #Delete Enemy
@@ -81,6 +82,7 @@ class NormalEffect(GroupEffect):
                     else:
                         #Next Path
                         e.__currentPath = self.group.paths[e.__currentPathIndex];
+                        e.__currentPath.BezierSpline.update();
                         e.__currentPathPercent = 0;
                 else:
                     e.__currentPathPercent += 1;
