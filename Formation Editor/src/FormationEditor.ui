@@ -317,6 +317,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="Group_Edit" >
+                <property name="text" >
+                 <string>Edit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="Groups_Change" >
                 <property name="text" >
                  <string>Change</string>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'F:\Twinkle Star Sprites\NTSSP\Formation Editor\src\FormationEditor.ui'
 #
-# Created: Sun Nov 09 19:03:26 2008
+# Created: Sat Nov 22 17:46:45 2008
 #      by: PyQt4 UI code generator 4.4.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -139,6 +139,9 @@ class Ui_MainWindow(object):
         self.Groups_Add = QtGui.QPushButton(self.Formation_GroupsGroup)
         self.Groups_Add.setObjectName("Groups_Add")
         self.verticalLayout_3.addWidget(self.Groups_Add)
+        self.Group_Edit = QtGui.QPushButton(self.Formation_GroupsGroup)
+        self.Group_Edit.setObjectName("Group_Edit")
+        self.verticalLayout_3.addWidget(self.Group_Edit)
         self.Groups_Change = QtGui.QPushButton(self.Formation_GroupsGroup)
         self.Groups_Change.setObjectName("Groups_Change")
         self.verticalLayout_3.addWidget(self.Groups_Change)
@@ -309,6 +312,7 @@ class Ui_MainWindow(object):
         self.Formation_GroupEffectStyle.setItemText(4, QtGui.QApplication.translate("MainWindow", "Rotate", None, QtGui.QApplication.UnicodeUTF8))
         self.Formation_GroupEffectStyle.setItemText(5, QtGui.QApplication.translate("MainWindow", "Arc", None, QtGui.QApplication.UnicodeUTF8))
         self.Groups_Add.setText(QtGui.QApplication.translate("MainWindow", "Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.Group_Edit.setText(QtGui.QApplication.translate("MainWindow", "Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.Groups_Change.setText(QtGui.QApplication.translate("MainWindow", "Change", None, QtGui.QApplication.UnicodeUTF8))
         self.Groups_Delete.setText(QtGui.QApplication.translate("MainWindow", "Delete", None, QtGui.QApplication.UnicodeUTF8))
         self.Formation_MonstersGroup.setTitle(QtGui.QApplication.translate("MainWindow", "Monsters", None, QtGui.QApplication.UnicodeUTF8))

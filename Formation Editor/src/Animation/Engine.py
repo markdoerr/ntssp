@@ -92,14 +92,78 @@ class NormalEffect(GroupEffect):
             if(self.globalPoints % self.nbPointsInter == 0):
                 self.enemiesIndex = self.enemiesIndex + 1;
                 
-                
+class CircleEffect(GroupEffect):
+    def __init__(self,group):
+        GroupEffect.__init__(self, group);
+        self.centerX = 0;
+        self.centerY = 0;
+        if(len(group.paths) > 0):
+            self.__currentPath = self.group.paths[0];
+            self.__currentPath.BezierSpline.update();
+            self.__currentPathPercent = 0;
+            self.__currentPathIndex = 0;
             
+            for e in self.group.enemies:
+                pos = self.group.GetEnemyPos(e);
+                e.__currentR = math.sqrt(pos[0]*pos[0] + pos[1]*pos[1]);
+                if(e.__currentR == 0):
+                    e.__currentDeg = 0;
+                else:
+                    e.__currentDeg = math.acos(pos[0]/e.__currentR) % 360;
+            
+            #TODO change for the length of the path
+            self.nbPoints = int(1000.0 / group.speed);
+            self.nbPointsInter = int(group.diffTime * FPS);
+            self.globalPoints = 0;
+    def getName(self):
+        return "Circle";
+    def animate(self):
+        if(len(self.group.paths) > 0):
+                #Enemy infos
+                path = self.__currentPath;
+                percent = self.__currentPathPercent;
+                
+                #Get New position
+                coord = path.BezierSpline.getPoint(float(percent) / float(self.nbPoints));
+                
+                #Update Position
+                self.centerX = coord[0];
+                self.centerY = coord[1];
+                
+                if(percent == self.nbPoints):
+                    self.__currentPathIndex = self.__currentPathIndex + 1;
+                    if(self.__currentPathIndex >= len(self.group.paths)):
+                        #Delete Enemy
+                        self.group.enemies.clear();
+                        i -= 1;
+                        
+                        #clean enemy
+                        for e in self.group.enemies:
+                            del e.__currentR;
+                            del e.__currentDeg;
+                        self.SendEndEvent();
+                        
+                    else:
+                        #Next Path
+                        self.__currentPath = self.group.paths[self.__currentPathIndex];
+                        self.__currentPath.BezierSpline.update();
+                        self.__currentPathPercent = 0;
+                else:
+                    self.__currentPathPercent += 1;
+                    
+                #Update Enemies       
+                for e in self.group.enemies:
+                    x = self.centerX + e.__currentR * math.cos(e.__currentDeg);
+                    y = self.centerY + e.__currentR * math.sin(e.__currentDeg);
+                    e.x = x;
+                    e.y = y;
+                    e.__currentDeg = (e.__currentDeg +  0.1) % 360;
             
             
     
 class Engine:
     def __init__(self,groups):
-        GroupEffect.types[0] = NormalEffect;
+        GroupEffect.types = {EffectType.Zero : NormalEffect, EffectType.Circle : CircleEffect};
         self.effects = {};
         self.groups = [];
         for g in groups:
