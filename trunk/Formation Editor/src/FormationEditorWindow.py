@@ -7,7 +7,7 @@ from PathStroke import *
 from Data.Data import *;
 from Data.Enemy import *;
 from Animation.Engine import *;
-
+from GroupEditorWindow import *;
 class FormationEditorWindow(QtGui.QMainWindow):
     def __init__(self):
         QtGui.QMainWindow.__init__(self);
@@ -44,6 +44,7 @@ class FormationEditorWindow(QtGui.QMainWindow):
         QObject.connect(self.ui.Groups_Add,SIGNAL("clicked(bool)"),self.AddGroup);
         QObject.connect(self.ui.Groups_Change, SIGNAL("clicked(bool)"),self.ChangeGroup);
         QObject.connect(self.ui.Groups_Delete, SIGNAL("clicked(bool)"),self.DeleteGroup);
+        QObject.connect(self.ui.Group_Edit, SIGNAL("clicked(bool)"),self.EditGroup);
         QObject.connect(self.ui.Formation_GroupDiffTime,SIGNAL("sliderMoved(int)"),self.GroupDiffTimeChange);
         QObject.connect(self.ui.Formation_GroupSpeed,SIGNAL("sliderMoved(int)"),self.GroupSpeedChange);
         
@@ -185,6 +186,11 @@ class FormationEditorWindow(QtGui.QMainWindow):
     
     
     #Groups Group
+    def EditGroup(self):
+        selected = self.GetGroupSelected(self.ui.Formation_GroupsList);
+        if(len(selected)>0):
+            dialog = GroupEditorWindow(selected[0]);
+            dialog.exec_();
     def GroupDiffTimeChange(self,i):
         self.ui.Formation_GroupDiffTimeLabel.setText("DiffTime: "+str(i/10.0) +"s");
     def GroupSpeedChange(self,i):
@@ -214,7 +220,10 @@ class FormationEditorWindow(QtGui.QMainWindow):
     def ChangeGroup(self):
         selected = self.GetGroupSelected(self.ui.Formation_GroupsList);
         if(len(selected) == 1):
-            selected[0].enemies = self.GetMonsterSelected();
+            selected[0].ClearEnemies();
+            monsters = self.GetMonsterSelected();
+            for e in monsters:
+                selected[0].AddEnemy(e);
             self.UpdateGroups();
             
     def DeleteGroup(self):

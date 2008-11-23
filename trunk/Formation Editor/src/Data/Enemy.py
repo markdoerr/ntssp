@@ -22,7 +22,6 @@ class EffectType:
     Zero = 0;
     Circle = 1;
     Switch = 2;
-    Rotate = 3;
     Arc = 4;
     text = ["Circle","Switch","Rotate","Arc","Normal"];
     
@@ -47,19 +46,32 @@ class Group:
         self.id = Group.GroupID;
         Group.GroupID = Group.GroupID + 1;
         #table of enemies
+        self.enemyPos = {};
         self.enemies = [];
         self.assoc = {};
         self.paths = [];
+    def SetEnemyPos(self,enemy,x,y):
+        if(self.enemyPos.has_key(enemy)):
+            self.enemyPos[enemy] = (x,y);
+    def GetEnemyPos(self,enemy):
+        if(self.enemyPos.has_key(enemy)):
+            return self.enemyPos[enemy];
+        return (0,0);
     def ContainsEnemy(self,enemy):
         return enemy in self.enemies;
     def ContainsPath(self,path):
         return path in self.paths;
     def DeleteEnemy(self,enemy):
         self.enemies.remove(enemy);
+        self.enemyPos.pop(enemy);
+    def ClearEnemies(self):
+        for e in self.enemies:
+            self.DeleteEnemy(e);
     def DeletePath(self,path):
         self.paths.remove(path);
         self.assoc.pop(path);
     def AddEnemy(self,enemy):
+        self.enemyPos[enemy] = (0,0);
         self.enemies.append(enemy);
     def AddPath(self,path,type,timeBefore):
         self.assoc[path] = Association(self,path,type,timeBefore);
@@ -77,6 +89,7 @@ class Group:
         clone.enemies = self.enemies[:];
         clone.paths = self.paths[:];
         clone.assoc = self.assoc.copy();
+        clone.enemyPos = self.enemyPos.copy();
         return clone;
     def DownPath(self,path):
         index = self.paths.index(path);
