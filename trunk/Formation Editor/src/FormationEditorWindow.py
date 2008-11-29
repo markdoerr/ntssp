@@ -9,6 +9,7 @@ from Data.Enemy import *;
 from Animation.Engine import *;
 from GroupEditorWindow import *;
 class FormationEditorWindow(QtGui.QMainWindow):
+
     def __init__(self):
         QtGui.QMainWindow.__init__(self);
         #Import UI from Designer

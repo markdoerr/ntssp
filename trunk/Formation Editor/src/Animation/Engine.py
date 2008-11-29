@@ -55,17 +55,11 @@ class NormalEffect(GroupEffect):
             for i in xrange(self.enemiesIndex+1):
                 if(i >= len(self.group.enemies)):
                     break;
+                
                 #Enemy infos
                 e = self.group.enemies[i];
                 path = e.__currentPath;
                 percent = e.__currentPathPercent;
-                
-                #Get New position
-                coord = path.BezierSpline.getPoint(float(percent)/float(self.nbPoints));
-                
-                #Update Position
-                e.x = coord[0];
-                e.y = coord[1];
                 
                 if(percent == self.nbPoints):
                     e.__currentPathIndex = e.__currentPathIndex + 1;
@@ -79,19 +73,115 @@ class NormalEffect(GroupEffect):
                         del(e.__currentPathIndex);
                         del(e.__currentPathPercent);
                         self.SendEndEnemyEvent()
+                        continue;
                     else:
                         #Next Path
                         e.__currentPath = self.group.paths[e.__currentPathIndex];
                         e.__currentPath.BezierSpline.update();
                         e.__currentPathPercent = 0;
-                else:
-                    e.__currentPathPercent += 1;
+                    
+                
+                #Get New position
+                coord = path.BezierSpline.getPoint(float(percent)/float(self.nbPoints));
+                
+                #Update Position
+                e.x = coord[0];
+                e.y = coord[1];
+                
+                e.__currentPathPercent += 1;
+                
                 
             #Update Enemies Index;
             self.globalPoints = self.globalPoints +1;
             if(self.globalPoints % self.nbPointsInter == 0):
                 self.enemiesIndex = self.enemiesIndex + 1;
+class SwitchEffect(GroupEffect):
+    SWITCH_SPEED = 10;
+    def __init__(self,group):
+        GroupEffect.__init__(self, group);
+        self.centerX = 0;
+        self.centerY = 0;
+        if(len(group.paths) > 0):
+            self.__currentPath = self.group.paths[0];
+            self.__currentPath.BezierSpline.update();
+            self.__currentPathPercent = 0;
+            self.__currentPathIndex = 0;
+            
+            for e in self.group.enemies:
+                pos = self.group.GetEnemyPos(e);
+                e.__currentX = pos[0];
+                if(pos[0] > 0):
+                    e.__currentIncr = -1;
+                elif(pos[0] == 0):
+                    e.__currentIncr = 0;
+                else:
+                    e.__currentIncr = 1;
+            
+            #TODO change for the length of the path
+            self.nbPoints = int(1000.0 / group.speed);
+            self.nbPointsInter = int(group.diffTime * FPS);
+            self.globalPoints = 0;
+    def getName(self):
+        return "Switch";
+    def animate(self):
+        if(len(self.group.paths) > 0):
+                #Enemy infos
+                path = self.__currentPath;
+                percent = self.__currentPathPercent;
                 
+                if(percent == self.nbPoints):
+                    self.__currentPathIndex = self.__currentPathIndex + 1;
+                    if(self.__currentPathIndex >= len(self.group.paths)):
+                        #Delete Enemy
+                        self.group.enemies = [];
+                        
+                        #clean enemy
+                        for e in self.group.enemies:
+                            del e.__currentX;
+                            del e.__currentIncr;
+                        self.SendEndEvent();
+                        
+                    else:
+                        #Next Path
+                        self.__currentPath = self.group.paths[self.__currentPathIndex];
+                        self.__currentPath.BezierSpline.update();
+                        self.__currentPathPercent = 0;
+                        
+                #Get New position
+                coord = path.BezierSpline.getPoint(float(percent) / float(self.nbPoints));
+                
+                #Update Position
+                self.centerX = coord[0];
+                self.centerY = coord[1];
+                
+                self.__currentPathPercent += 1;
+                    
+                #Update Enemies       
+                for e in self.group.enemies:
+                    pos = self.group.GetEnemyPos(e);
+
+                    if(pos[0] > 0):
+                        if(e.__currentX >= pos[0]):
+                            e.__currentIncr = -1 * (pos[0]+1)*2 / SwitchEffect.SWITCH_SPEED;
+                        elif(e.__currentX <= -pos[0]):
+                            e.__currentIncr = 1 * (pos[0]+1)*2/ SwitchEffect.SWITCH_SPEED;
+                    else:
+                        if(e.__currentX <= pos[0]):
+                            e.__currentIncr = 1 * (-pos[0]+1)*2/ SwitchEffect.SWITCH_SPEED;
+                        elif(e.__currentX >= -pos[0]):
+                            e.__currentIncr = -1 * (-pos[0]+1)*2/ SwitchEffect.SWITCH_SPEED;
+                            
+                    if(pos[0] > 0):
+                        e.__currentX = e.__currentX + e.__currentIncr
+                    else:
+                        e.__currentX = e.__currentX + e.__currentIncr;
+                    
+                    x = self.centerX + e.__currentX;
+                    y = self.centerY + pos[1]
+                    
+                    e.x = x;
+                    e.y = y;
+                                    
 class CircleEffect(GroupEffect):
     def __init__(self,group):
         GroupEffect.__init__(self, group);
@@ -123,19 +213,11 @@ class CircleEffect(GroupEffect):
                 path = self.__currentPath;
                 percent = self.__currentPathPercent;
                 
-                #Get New position
-                coord = path.BezierSpline.getPoint(float(percent) / float(self.nbPoints));
-                
-                #Update Position
-                self.centerX = coord[0];
-                self.centerY = coord[1];
-                
                 if(percent == self.nbPoints):
                     self.__currentPathIndex = self.__currentPathIndex + 1;
                     if(self.__currentPathIndex >= len(self.group.paths)):
                         #Delete Enemy
-                        self.group.enemies.clear();
-                        i -= 1;
+                        self.group.enemies = [];
                         
                         #clean enemy
                         for e in self.group.enemies:
@@ -148,8 +230,15 @@ class CircleEffect(GroupEffect):
                         self.__currentPath = self.group.paths[self.__currentPathIndex];
                         self.__currentPath.BezierSpline.update();
                         self.__currentPathPercent = 0;
-                else:
-                    self.__currentPathPercent += 1;
+                        
+                #Get New position
+                coord = path.BezierSpline.getPoint(float(percent) / float(self.nbPoints));
+                
+                #Update Position
+                self.centerX = coord[0];
+                self.centerY = coord[1];
+                
+                self.__currentPathPercent += 1;
                     
                 #Update Enemies       
                 for e in self.group.enemies:
@@ -163,7 +252,7 @@ class CircleEffect(GroupEffect):
     
 class Engine:
     def __init__(self,groups):
-        GroupEffect.types = {EffectType.Zero : NormalEffect, EffectType.Circle : CircleEffect};
+        GroupEffect.types = {EffectType.Zero : NormalEffect, EffectType.Circle : CircleEffect, EffectType.Switch : SwitchEffect};
         self.effects = {};
         self.groups = [];
         for g in groups:
@@ -198,9 +287,13 @@ class Engine:
             self.__change = False;
         for g in self.currentGroups:
             self.__animateGroup(g);
+        if(len(self.currentGroups) == 0):
+            return False;
+        return True;
     def __animateGroup(self,group):
         if(not self.effects.has_key(group)):
             self.effects[group] = GroupEffect.getEffect(group);
+            self.effects[group].AttachEvent(self);
         effect = self.effects[group];
         effect.animate();
         
