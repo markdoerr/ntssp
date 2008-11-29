@@ -4,6 +4,8 @@ from Data.Data import *
 CurveMode = 0
 LineMode = 1
 class PathStrokeRenderer(QWidget):
+    ENEMY_BASE_SIZE = 30;
+    ENEMY_COLOR = [Qt.red,Qt.yellow,Qt.green,Qt.blue,QColor(255.0,0.0,255.0)];
     def __init__(self,parent):
         QWidget.__init__(self,parent)
         self.m_curve=True;
@@ -73,11 +75,14 @@ class PathStrokeRenderer(QWidget):
                 pen = QPen(lg, self.m_penWidth, self.m_penStyle, self.m_capStyle, self.m_joinStyle);
                 painter.strokePath(path, pen);
         else:
-            self.AnimEngine.GlobalAnimation();
+            self.Animation = self.AnimEngine.GlobalAnimation();
             nbM = Data.getInstance().getNbMonster();
             for i in xrange(nbM):
-                painter.drawEllipse(QRectF(Data.getInstance().getMonster(i).x - self.m_pointSize,Data.getInstance().getMonster(i).y - self.m_pointSize,self.m_pointSize*2, self.m_pointSize*2));
-
+                pos = (Data.getInstance().getMonster(i).x,Data.getInstance().getMonster(i).y);
+                painter.setPen(PathStrokeRenderer.ENEMY_COLOR[Data.getInstance().getMonster(i).life]);
+                painter.setBrush(PathStrokeRenderer.ENEMY_COLOR[Data.getInstance().getMonster(i).life]);
+                offset = PathStrokeRenderer.ENEMY_BASE_SIZE * Data.getInstance().getMonster(i).size / 2.0;
+                painter.drawEllipse(QRect(pos[0]-offset,pos[1]-offset,PathStrokeRenderer.ENEMY_BASE_SIZE * Data.getInstance().getMonster(i).size,PathStrokeRenderer.ENEMY_BASE_SIZE * Data.getInstance().getMonster(i).size));
     def getCurrentPath(self):
         return self.currentPath;
     def mousePressEvent(self,e):
