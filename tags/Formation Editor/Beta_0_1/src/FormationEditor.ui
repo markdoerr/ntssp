@@ -1,0 +1,680 @@
+<ui version="4.0" >
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>894</width>
+    <height>814</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QHBoxLayout" >
+    <item>
+     <widget class="QGroupBox" name="Preview" >
+      <property name="title" >
+       <string>Preview</string>
+      </property>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QScrollArea" name="PreviewArea" >
+         <property name="widgetResizable" >
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="ToolBox" >
+      <property name="maximumSize" >
+       <size>
+        <width>350</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="baseSize" >
+       <size>
+        <width>100</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title" >
+       <string>Tools</string>
+      </property>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QTabWidget" name="ToolsTabs" >
+         <property name="currentIndex" >
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab" >
+          <attribute name="title" >
+           <string>Paths</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout" >
+           <item>
+            <widget class="QGroupBox" name="PathGroup" >
+             <property name="title" >
+              <string>Path</string>
+             </property>
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QRadioButton" name="Curve" >
+                <property name="text" >
+                 <string>Curve</string>
+                </property>
+                <property name="checked" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="Line" >
+                <property name="text" >
+                 <string>Line</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Path_Add" >
+                <property name="text" >
+                 <string>Add Path</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Path_Delete" >
+                <property name="text" >
+                 <string>Delete Path</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="PenwidthGroup" >
+             <property name="title" >
+              <string>Pen Width</string>
+             </property>
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QSlider" name="PenWidthSlider" >
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="GlobalGroup" >
+             <property name="title" >
+              <string>Global</string>
+             </property>
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QPushButton" name="Animate" >
+                <property name="text" >
+                 <string>Animate</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Save" >
+                <property name="text" >
+                 <string>Save</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Load" >
+                <property name="text" >
+                 <string>Load</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2" >
+          <attribute name="title" >
+           <string>Formation</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_8" >
+           <item>
+            <widget class="QGroupBox" name="Formation_GroupsGroup" >
+             <property name="title" >
+              <string>Groups</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3" >
+              <item>
+               <widget class="QTreeWidget" name="Formation_GroupsList" >
+                <column>
+                 <property name="text" >
+                  <string>Objects</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text" >
+                  <string>Description</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" native="1" name="widget_2" >
+                <layout class="QHBoxLayout" name="horizontalLayout_2" >
+                 <item>
+                  <widget class="QLabel" name="Formation_GroupSpeedLabel" >
+                   <property name="text" >
+                    <string>Speed: 0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_3" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Formation_GroupDiffTimeLabel" >
+                   <property name="text" >
+                    <string>DiffTime: 0s</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_4" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_3" >
+                   <property name="text" >
+                    <string>Effect Type:</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" native="1" name="widget" >
+                <layout class="QHBoxLayout" name="horizontalLayout" >
+                 <item>
+                  <widget class="QSlider" name="Formation_GroupSpeed" >
+                   <property name="minimum" >
+                    <number>1</number>
+                   </property>
+                   <property name="maximum" >
+                    <number>100</number>
+                   </property>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="Formation_GroupDiffTime" >
+                   <property name="minimum" >
+                    <number>1</number>
+                   </property>
+                   <property name="maximum" >
+                    <number>100</number>
+                   </property>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2" >
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="Formation_GroupEffectStyle" >
+                   <item>
+                    <property name="text" >
+                     <string>Normal</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Circle</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Switch</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Arc</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Rotate</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text" >
+                     <string>Fixed</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Groups_Add" >
+                <property name="text" >
+                 <string>Add</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Group_Edit" >
+                <property name="text" >
+                 <string>Edit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Groups_Change" >
+                <property name="text" >
+                 <string>Change</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Groups_Delete" >
+                <property name="text" >
+                 <string>Delete</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="Formation_MonstersGroup" >
+             <property name="title" >
+              <string>Monsters</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_2" >
+              <item>
+               <widget class="QTreeWidget" name="Formation_MonstersList" >
+                <property name="selectionMode" >
+                 <enum>QAbstractItemView::MultiSelection</enum>
+                </property>
+                <column>
+                 <property name="text" >
+                  <string>Objects</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text" >
+                  <string>Description</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="Monster_ColorLabel" >
+                <property name="text" >
+                 <string>Color : 1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="Monster_Color" >
+                <property name="minimum" >
+                 <number>1</number>
+                </property>
+                <property name="maximum" >
+                 <number>5</number>
+                </property>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition" >
+                 <enum>QSlider::TicksAbove</enum>
+                </property>
+                <property name="tickInterval" >
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="Monster_SizeLabel" >
+                <property name="text" >
+                 <string>Size : 1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="Monster_Size" >
+                <property name="minimum" >
+                 <number>1</number>
+                </property>
+                <property name="maximum" >
+                 <number>5</number>
+                </property>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition" >
+                 <enum>QSlider::TicksAbove</enum>
+                </property>
+                <property name="tickInterval" >
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Monsters_Add" >
+                <property name="text" >
+                 <string>Add</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Monsters_Change" >
+                <property name="text" >
+                 <string>Change</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Monsters_Delete" >
+                <property name="text" >
+                 <string>Delete</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_3" >
+          <attribute name="title" >
+           <string>Association</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4" >
+           <item>
+            <widget class="QGroupBox" name="Association_AssociationGroup" >
+             <property name="title" >
+              <string>Association</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5" >
+              <item>
+               <widget class="QLabel" name="label_4" >
+                <property name="text" >
+                 <string>Groups</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeWidget" name="Association_GroupsList" >
+                <column>
+                 <property name="text" >
+                  <string>Objects</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text" >
+                  <string>Description</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5" >
+                <property name="text" >
+                 <string>Paths</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeWidget" name="Association_PathsList" >
+                <column>
+                 <property name="text" >
+                  <string>Objects</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text" >
+                  <string>Description</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Association_Associate" >
+                <property name="text" >
+                 <string>Associate</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_6" >
+                <property name="text" >
+                 <string>Type</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="Association_Type" >
+                <item>
+                 <property name="text" >
+                  <string>Normal</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text" >
+                  <string>When Player is Found</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="Association_TimeLabel" >
+                <property name="text" >
+                 <string>Time Before : 0 s</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="Association_TimeBefore" >
+                <property name="maximum" >
+                 <number>100</number>
+                </property>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_4" >
+          <attribute name="title" >
+           <string>Time Line</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_7" >
+           <item>
+            <widget class="QGroupBox" name="Time_OrderGroup" >
+             <property name="title" >
+              <string>Groups  Order</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6" >
+              <item>
+               <widget class="QLabel" name="label" >
+                <property name="text" >
+                 <string>Global Groups Order :</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeWidget" name="Time_GroupsList" >
+                <property name="autoFillBackground" >
+                 <bool>false</bool>
+                </property>
+                <property name="sortingEnabled" >
+                 <bool>false</bool>
+                </property>
+                <column>
+                 <property name="text" >
+                  <string>Objects</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text" >
+                  <string>Description</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_GroupUp" >
+                <property name="text" >
+                 <string>Up</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_GroupDown" >
+                <property name="text" >
+                 <string>Down</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_2" >
+                <property name="text" >
+                 <string>Time Order For Current Group :</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeWidget" name="Time_GroupOrder" >
+                <property name="autoFillBackground" >
+                 <bool>false</bool>
+                </property>
+                <property name="sortingEnabled" >
+                 <bool>false</bool>
+                </property>
+                <column>
+                 <property name="text" >
+                  <string>Objects</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text" >
+                  <string>Description</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_Delete" >
+                <property name="text" >
+                 <string>Delete</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_OrderUp" >
+                <property name="text" >
+                 <string>Up</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Time_OrderDown" >
+                <property name="text" >
+                 <string>Down</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>894</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
